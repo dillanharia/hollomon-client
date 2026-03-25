@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ConnectionTest {
 
@@ -17,7 +18,6 @@ public class ConnectionTest {
     	String serverHost = "netsrv.cim.rhul.ac.uk";
         int serverPort = 1812;
 
-        
         String username = "evidence".toLowerCase();
         String password = "internationaltodiscover";
 
@@ -32,9 +32,12 @@ public class ConnectionTest {
             outputWriter.println(username);
             outputWriter.println(password);
 
+            // List to store all cards received from hollomon server
+            ArrayList<Card> cards = new ArrayList<>();
+            
             String serverResponse;
             
-            // Continuously read lines sent by server
+            // Continuously read lines sent by the hollomon server
             while ((serverResponse = inputReader.readLine()) != null) {
 
                 if (serverResponse.equals("CARD")) {
@@ -46,9 +49,9 @@ public class ConnectionTest {
 
                     // Create a Card object from the received server data
                     Card card = new Card(id, name, rarity, price);
-
-                    // Print the parsed card
-                    System.out.println("Parsed card: " + card);
+                    cards.add(card);
+                   
+                    System.out.println("Stored card: " + card);
                 }
                 else if (serverResponse.equals("Server has finished sending data")) {
                     break;
@@ -57,10 +60,15 @@ public class ConnectionTest {
                     System.out.println(serverResponse);
                 }
             }
+            // Display all stored cards after receiving
+            System.out.println("\n--- All Cards Have been received ---");
+            for (Card c : cards) {
+                System.out.println(c);
+            }
 
-            System.out.println("====Connection closed====");
+            System.out.println("--- Connection closed ---");
         } catch (IOException e) {
-            System.out.println("----Could not connect to server----");
+            System.out.println("--- Could not connect to server ---");
             e.printStackTrace();
         }
     }
