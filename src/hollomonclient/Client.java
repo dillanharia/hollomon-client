@@ -70,4 +70,47 @@ public class Client {
 
         return cards;
     }
+    
+    // Method for receiving and dispaying credits upon login
+    public int getCredits(String username, String password) {
+
+        int credits = 0;
+        
+        
+        try (
+            Socket socket = new Socket(serverHost, serverPort);
+            PrintWriter outputWriter = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader inputReader = new BufferedReader(
+                    new InputStreamReader(socket.getInputStream()))
+        ) {
+            // Logs in
+            outputWriter.println(username.toLowerCase());
+            outputWriter.println(password);
+
+            String serverResponse;
+
+            // skip login response + card data
+            while ((serverResponse = inputReader.readLine()) != null) {
+                if (serverResponse.equals("OK")) {
+                    break;
+                }
+            }
+
+            // send the 'CREDITS' command
+            outputWriter.println("CREDITS");
+
+            // read the credit value by parsing
+            String creditLine = inputReader.readLine();
+            credits = Integer.parseInt(creditLine);
+
+            // Read final OK
+            inputReader.readLine();
+
+        } catch (IOException e) {
+            System.out.println("Error getting credits");
+            e.printStackTrace();
+        }
+
+        return credits; // credits value
+    }
 }
