@@ -27,7 +27,7 @@ public class ConnectionTest {
             BufferedReader inputReader = new BufferedReader(
                     new InputStreamReader(socket.getInputStream()))
         ) {
-            System.out.println("Connected to server.");
+            System.out.println("====Connected to server====");
 
             outputWriter.println(username);
             outputWriter.println(password);
@@ -41,9 +41,9 @@ public class ConnectionTest {
                 }
             }
 
-            System.out.println("Connection closed.");
+            System.out.println("====Connection closed====");
         } catch (IOException e) {
-            System.out.println("Could not connect to server.");
+            System.out.println("----Could not connect to server----");
             e.printStackTrace();
         }
     }

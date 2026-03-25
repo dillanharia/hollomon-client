@@ -1,10 +1,13 @@
 package hollomonclient;
 
-public class Rarity {
+public enum Rarity {
+	// types of rarities
+    COMMON,
+    UNCOMMON,
+    RARE,
+    UNIQUE;
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
+    public static Rarity fromString(String rarityText) {
+        return Rarity.valueOf(rarityText.toUpperCase());
+    }
 }
