@@ -33,11 +33,28 @@ public class ConnectionTest {
             outputWriter.println(password);
 
             String serverResponse;
+            
+            // Continuously read lines sent by server
             while ((serverResponse = inputReader.readLine()) != null) {
-                System.out.println(serverResponse);
 
-                if (serverResponse.equals("OK")) {
+                if (serverResponse.equals("CARD")) {
+
+                    int id = Integer.parseInt(inputReader.readLine());
+                    String name = inputReader.readLine();
+                    Rarity rarity = Rarity.fromString(inputReader.readLine());
+                    int price = Integer.parseInt(inputReader.readLine());
+
+                    // Create a Card object from the received server data
+                    Card card = new Card(id, name, rarity, price);
+
+                    // Print the parsed card
+                    System.out.println("Parsed card: " + card);
+                }
+                else if (serverResponse.equals("Server has finished sending data")) {
                     break;
+                }
+                else {
+                    System.out.println(serverResponse);
                 }
             }
 
