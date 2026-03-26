@@ -257,5 +257,42 @@ public class Client {
     		return false;
     	}
     }
+    
+    
+    public boolean sellCard(String username, String password, long cardId, long price) {
+    	
+    	try (
+    		Socket socket = new Socket(serverHost, serverPort);
+    			PrintWriter outputWriter = new PrintWriter(socket.getOutputStream(), true);
+    			BufferedReader inputReader = new BufferedReader(
+    					new InputStreamReader(socket.getInputStream()))
+    	) {
+    		
+    		// Login
+    		outputWriter.println(username.toLowerCase());
+    		outputWriter.println(password);
+    		
+    		String serverResponse;
+    		
+    		// Skip initial login response
+    		while ((serverResponse = inputReader.readLine()) != null) {
+    			if (serverResponse.equals("OK")) {
+    				break;
+    			}
+    		}
+    		
+    		// Send SELL command
+    		outputWriter.println("SELL " + cardId + " " + price);
+    		
+    		// Read result
+    		serverResponse = inputReader.readLine();
+    		
+    		return serverResponse != null && serverResponse.equals("OK");
+    	} catch (IOException e) {
+    		System.out.println("Error selling card");
+    		e.printStackTrace();
+    		return false;
+    	}
+    }
  
 }

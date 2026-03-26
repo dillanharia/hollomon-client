@@ -27,7 +27,8 @@ public class Main {
 			System.out.println("2. Balance ");
 			System.out.println("3. Available Cards");
 			System.out.println("4. Buy cards");
-			System.out.println("5. Exit");
+			System.out.println("5. Sell cards");
+			System.out.println("6. Exit");
 			System.out.print("Please enter your choice: ");
 			
 			String choice = scanner.nextLine();
@@ -87,7 +88,29 @@ public class Main {
 					}
 					break;
 					
-				case "5":
+				case "5": // Sell Cmd
+					
+					System.out.print("Enter the ID of the card you want to sell: ");;
+					String idInput = scanner.nextLine();
+					
+					System.out.print("Enter the price you want to sell it for: ");;
+					String priceInput = scanner.nextLine();
+					
+					try {
+						long cardId = Long.parseLong(idInput);
+						long price = Long.parseLong(priceInput);
+						
+						boolean soldSuccessfully = client.sellCard(username, password, cardId, price);
+						
+						if (soldSuccessfully) {
+							System.out.println("Card listed for sale successfully");
+						}
+					} catch (NumberFormatException e) {
+						System.out.println("Invalid input. Please enter numeric values.");
+					}
+					break;
+					
+				case "6":
 					System.out.println("Exiting Hollomon client");
 					running = false;
 					break;
