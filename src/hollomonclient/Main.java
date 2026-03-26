@@ -25,7 +25,8 @@ public class Main {
 			System.out.println();
 			System.out.println("1. Inventory");
 			System.out.println("2. Balance ");
-			System.out.println("3. Exit");
+			System.out.println("3. Available Cards");
+			System.out.println("4. Exit");
 			System.out.print("Please enter your choice: ");
 			
 			String choice = scanner.nextLine();
@@ -46,7 +47,17 @@ public class Main {
 					System.out.println("\nTotal Credits: " + credits);
 					break;
 					
-				case "3":
+				case "3": // Request and display the cards currently available to buy
+					ArrayList<Card> offers = client.getOffers(username,  password);
+					offers.sort(null);
+					
+					System.out.println("\n--- Available Cards ---");
+					for (Card card : offers) {
+						System.out.println(card);
+					}
+					break;
+					
+				case "4":
 					System.out.println("Exiting Hollomon client");
 					running = false;
 					break;

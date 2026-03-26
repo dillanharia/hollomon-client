@@ -167,4 +167,56 @@ public class Client {
 
         return cards;
     }
+    
+    // Method to send the OFFERS cmd to request cards currently for sale
+    public ArrayList<Card> getOffers(String username, String password) {
+    	
+    	ArrayList<Card> offers = new ArrayList<>();
+
+        try (
+            Socket socket = new Socket(serverHost, serverPort);
+            PrintWriter outputWriter = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader inputReader = new BufferedReader(
+                    new InputStreamReader(socket.getInputStream()))
+        ) {
+        	
+        	// Login first
+        	outputWriter.println(username.toLowerCase());
+        	outputWriter.println(password);
+        	
+        	String serverResponse;
+        	
+        	// Skip initial login responses/starter cards
+        	while ((serverResponse = inputReader.readLine()) != null) {
+        		if (serverResponse.equals("OK")) {
+        			break;
+        		}
+        	}
+        	
+        	// Request cards currently on sale
+        	outputWriter.println("OFFERS");
+        	
+        	// Read/parse returned cards
+        	while ((serverResponse = inputReader.readLine()) != null) {
+        		
+        		if (serverResponse.equals("CARD")) {
+        			int id = Integer.parseInt(inputReader.readLine());
+        			String name = inputReader.readLine();
+        			Rarity rarity = Rarity.fromString(inputReader.readLine());
+        			int price = Integer.parseInt(inputReader.readLine());
+        			
+        			Card card = new Card(id, name, rarity, price); // Store each returned offer as a Card obj
+        			offers.add(card);
+        		}
+        		else if (serverResponse.equals("OK")) {
+        			break;
+        		}
+        	}
+        } catch (IOException e) {
+        	System.out.println("Error getting offers from server");
+        	e.printStackTrace();
+        }
+        
+        return offers;
+    }
 }
