@@ -11,7 +11,7 @@ public class Main {
 		
 		Client client = new Client("netsrv.cim.rhul.ac.uk", 1812);
 		
-		System.out.println("---- Hollomon - Gotta Cache 'Em All! ----");
+		System.out.println("==== Hollomon - Gotta Cache 'Em All! ====");
 		
 		System.out.print("Username: ");
 		String username = scanner.nextLine();
@@ -23,6 +23,7 @@ public class Main {
 		
 		while (running) {
 			System.out.println();
+			System.out.println("==== Welcome to Hollomon's Gotta Cache 'Em All!' ====");
 			System.out.println("1. Inventory");
 			System.out.println("2. Balance ");
 			System.out.println("3. Available Cards");
@@ -38,7 +39,7 @@ public class Main {
 					ArrayList<Card> cards = client.getCards(username,  password);
 					cards.sort(null); // Sort cards using compareTo method defined in Card.java
 					
-					System.out.println("\n--- Inventory ---");
+					System.out.println("\n==== Inventory ====");
 					for (Card card : cards) {
 						System.out.println(card);
 					}
@@ -53,7 +54,7 @@ public class Main {
 					ArrayList<Card> offers = client.getOffers(username,  password);
 					offers.sort(null);
 					
-					System.out.println("\n--- Available Cards ---");
+					System.out.println("\n==== Available Cards ====");
 					System.out.println("Number of offers: " + offers.size());
 					
 					
@@ -67,8 +68,7 @@ public class Main {
 					break;
 				
 				case "4": // Buy command
-					
-					System.out.println("Use option 3 first to view available card IDs");
+					System.out.println("==== Use option 3 first to view available card IDs ====");
 					
 					System.out.print("Enter the ID of the card you want to buy: ");
 					String buyInput = scanner.nextLine();
@@ -88,8 +88,7 @@ public class Main {
 					}
 					break;
 					
-				case "5": // Sell Cmd
-					
+				case "5": // Sell Command
 					System.out.print("Enter the ID of the card you want to sell: ");;
 					String idInput = scanner.nextLine();
 					
@@ -110,18 +109,15 @@ public class Main {
 					}
 					break;
 					
-				case "6":
-					System.out.println("Exiting Hollomon client");
+				case "6": // Exit command
+					System.out.println("==== Exiting Hollomon client ==== ");
 					running = false;
 					break;
 					
 				default:
 					System.out.println("Invalid choice. Please enter a correct numerical option");
-					
 			}
-		
 		}
-		
 		scanner.close();
 	}
 

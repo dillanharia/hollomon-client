@@ -1,14 +1,18 @@
 package hollomonclient;
 
+
+// This file defines a single card in the game, storing its ID, name, rarity and price
+// This class also illustrates how all cards are compared and sorted when displayed to the user via the terminal
+
 public class Card implements Comparable<Card> {
 
-    // the card's data: id, name of card, rarity of card and price of card
+    // The card's data: id, name of card, rarity of card and price of card
     private long cardId;
     private String cardName;
     private Rarity rarity;
     private long price;
     
-    // constructor to Initialise a card with all required attributes
+    // Constructor to Initialise a card with all required attributes
     public Card(long cardId, String cardName, Rarity rarity, long price) {
         this.cardId = cardId;
         this.cardName = cardName;
@@ -16,7 +20,7 @@ public class Card implements Comparable<Card> {
         this.price = price;
     }
 
-    // ---- getters ---- 
+    // ---- Getters ---- 
     public long getCardId() {
         return cardId;
     }
@@ -33,27 +37,27 @@ public class Card implements Comparable<Card> {
         return price;
     }
 
-    // comparison method defining how cards are to be ordered
+    // Comparison method defining how cards are to be ordered
     @Override
     public int compareTo(Card other) { 
 
-    	// compare the rarity first (higher rarity comes first)
+    	// Rarity Order
         int rarityCompare = other.rarity.ordinal() - this.rarity.ordinal();
         if (rarityCompare != 0) {
             return rarityCompare;
         }
 
-        // if card rarities ==, then compare alphabetically by name
+        // Alphabetical Order
         int nameCompare = this.cardName.compareToIgnoreCase(other.cardName);
         if (nameCompare != 0) {
             return nameCompare;
         }
 
-        // if name same, compare by ID
+
         return Long.compare(this.cardId, other.cardId);
     }
 
-    // card formatting
+    // Card Formmatting
     @Override
     public String toString() { 
         return "[" + cardId + "] " + cardName + " (" + rarity + ") - " + price + " credits";
