@@ -3,13 +3,13 @@ package hollomonclient;
 public class Card implements Comparable<Card> {
 
     // the card's data: id, name of card, rarity of card and price of card
-    private int cardId;
+    private long cardId;
     private String cardName;
     private Rarity rarity;
-    private int price;
+    private long price;
     
     // constructor to Initialise a card with all required attributes
-    public Card(int cardId, String cardName, Rarity rarity, int price) {
+    public Card(long cardId, String cardName, Rarity rarity, long price) {
         this.cardId = cardId;
         this.cardName = cardName;
         this.rarity = rarity;
@@ -17,7 +17,7 @@ public class Card implements Comparable<Card> {
     }
 
     // ---- getters ---- 
-    public int getCardId() {
+    public long getCardId() {
         return cardId;
     }
 
@@ -29,7 +29,7 @@ public class Card implements Comparable<Card> {
         return rarity;
     }
 
-    public int getPrice() {
+    public long getPrice() {
         return price;
     }
 
@@ -50,7 +50,7 @@ public class Card implements Comparable<Card> {
         }
 
         // if name same, compare by ID
-        return Integer.compare(this.cardId, other.cardId);
+        return Long.compare(this.cardId, other.cardId);
     }
 
     // card formatting

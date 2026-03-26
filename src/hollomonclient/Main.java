@@ -52,8 +52,13 @@ public class Main {
 					offers.sort(null);
 					
 					System.out.println("\n--- Available Cards ---");
-					for (Card card : offers) {
-						System.out.println(card);
+					
+					if (offers.isEmpty()) {
+						System.out.println("No cards are currently for sale");
+					} else {
+						for (Card card : offers) {
+							System.out.println(card);
+						}
 					}
 					break;
 					

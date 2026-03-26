@@ -43,10 +43,10 @@ public class Client {
             	// If a card block's received,parse it and store it as a Card obj
                 if (serverResponse.equals("CARD")) {
 
-                    int id = Integer.parseInt(inputReader.readLine());
+                    long id = Long.parseLong(inputReader.readLine());
                     String name = inputReader.readLine();
                     Rarity rarity = Rarity.fromString(inputReader.readLine());
-                    int price = Integer.parseInt(inputReader.readLine());
+                    long price = Long.parseLong(inputReader.readLine());
 
                     // Create a Card object from the received server data
                     Card card = new Card(id, name, rarity, price);
@@ -147,10 +147,10 @@ public class Client {
 
                 if (serverResponse.equals("CARD")) {
 
-                    int id = Integer.parseInt(inputReader.readLine());
+                    long id = Long.parseLong(inputReader.readLine());
                     String name = inputReader.readLine();
                     Rarity rarity = Rarity.fromString(inputReader.readLine());
-                    int price = Integer.parseInt(inputReader.readLine());
+                    long price = Long.parseLong(inputReader.readLine());
 
                     Card card = new Card(id, name, rarity, price);
                     cards.add(card);
@@ -200,10 +200,10 @@ public class Client {
         	while ((serverResponse = inputReader.readLine()) != null) {
         		
         		if (serverResponse.equals("CARD")) {
-        			int id = Integer.parseInt(inputReader.readLine());
+        			long id = Long.parseLong(inputReader.readLine());
         			String name = inputReader.readLine();
         			Rarity rarity = Rarity.fromString(inputReader.readLine());
-        			int price = Integer.parseInt(inputReader.readLine());
+        			long price = Long.parseLong(inputReader.readLine());
         			
         			Card card = new Card(id, name, rarity, price); // Store each returned offer as a Card obj
         			offers.add(card);
