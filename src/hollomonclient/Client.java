@@ -7,6 +7,9 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
+
+// This Client.java file handles all communication with the Hollomon server, including login and all of the game's commands
+
 public class Client {
 
 	// Stores server address and port number for Hollomon connection
@@ -19,7 +22,7 @@ public class Client {
         this.serverPort = serverPort;
     }
     
-    // Login method connects to the server, sends login details, returns any cards received
+    // Login Method: connects to the server, performs login and retrieves the initial set of cards
     public ArrayList<Card> login(String username, String password) {
 
         try (
@@ -63,7 +66,7 @@ public class Client {
         }
     }
     
-    // View credits method
+    // Balance Method: requests and returns the Player's current credit balance from the server
     public int getCredits(String username, String password) {
 
         int credits = 0;
@@ -106,7 +109,7 @@ public class Client {
         return credits; // credits value
     }
     
- // Cards inventory method
+ // Cards inventory method: Requests and returns the player's current card collection
     public ArrayList<Card> getCards(String username, String password) {
 
         try (
@@ -136,7 +139,7 @@ public class Client {
         }
     }
     
-    // Offers command method
+    // Offers command method: Requests and returns the list of cards currently available for purchase
     public ArrayList<Card> getOffers(String username, String password) {
 
         try (
@@ -166,7 +169,7 @@ public class Client {
         }
     }
     
-    // Send BUY cmd for a selected card ID
+    // BUY Command: Attempts to buy a card with a given ID and returns whether the purchase suceeded
     public boolean buyCard(String username, String password, long cardId) {
     	
     	try (
@@ -202,6 +205,7 @@ public class Client {
     	}
     }
     
+    // SELL command: attempts to list a card for sale with a specified price and returns if it succeeded
     public boolean sellCard(String username, String password, long cardId, long price) {
     	
     	try (
@@ -236,7 +240,7 @@ public class Client {
     	}
     }
     
- // Reads the next four lines from the server and converts them into a Card object
+    // Reads a single card from the server response and converts it into a Card object
     private Card readCard(BufferedReader inputReader) throws IOException {
         long id = Long.parseLong(inputReader.readLine());
         String name = inputReader.readLine();
@@ -246,7 +250,7 @@ public class Client {
         return new Card(id, name, rarity, price);
     }
 
-    // Reads lines until the server sends OK, used to skip the initial login response
+    // Skips all server responses until "OK" marker's reached
     private void skipUntilOk(BufferedReader inputReader) throws IOException {
         String serverResponse;
 
@@ -257,7 +261,7 @@ public class Client {
         }
     }
 
-    // Reads card blocks from the server until OK is received
+    // Reads multiple card entries from the server until "OK" is received
     private ArrayList<Card> readCardsUntilOk(BufferedReader inputReader) throws IOException {
         ArrayList<Card> cards = new ArrayList<>();
         String serverResponse;
