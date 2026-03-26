@@ -33,6 +33,7 @@ public class Main {
 			switch (choice) {
 				case "1": // Player inventory
 					ArrayList<Card> cards = client.getCards(username,  password);
+					cards.sort(null); // Sort cards using compareTo method defined in Card.java
 					
 					System.out.println("\n--- Inventory ---");
 					for (Card card : cards) {
