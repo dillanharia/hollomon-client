@@ -219,4 +219,43 @@ public class Client {
         
         return offers;
     }
+    
+    // Send BUY cmd for a selected card ID
+    public boolean buyCard(String username, String password, long cardId) {
+    	
+    	try (
+    		Socket socket = new Socket(serverHost, serverPort);
+    			PrintWriter outputWriter = new PrintWriter(socket.getOutputStream(), true);
+    			BufferedReader inputReader = new BufferedReader(
+    					new InputStreamReader(socket.getInputStream()))
+    	) {
+    	
+    		// Login
+    		outputWriter.println(username.toLowerCase());
+    		outputWriter.println(password);
+    		
+    		String serverResponse;
+    		
+    		// Skip initial login response and starter cards
+    		while ((serverResponse = inputReader.readLine()) != null) {
+    			if (serverResponse.equals("OK")) {
+    				break;
+    			}
+    		}
+    		
+    		// Send BUY cmd with chosen card ID
+    		outputWriter.println(" BUY " + cardId);
+    		
+    		// Read server result
+    		serverResponse = inputReader.readLine();
+    		
+    		return serverResponse != null && serverResponse.equals("OK");
+    	
+    	} catch (IOException e) {
+    		System.out.println("Error buying card from server");
+    		e.printStackTrace();
+    		return false;
+    	}
+    }
+ 
 }

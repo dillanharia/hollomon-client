@@ -26,7 +26,8 @@ public class Main {
 			System.out.println("1. Inventory");
 			System.out.println("2. Balance ");
 			System.out.println("3. Available Cards");
-			System.out.println("4. Exit");
+			System.out.println("4. Buy cards");
+			System.out.println("5. Exit");
 			System.out.print("Please enter your choice: ");
 			
 			String choice = scanner.nextLine();
@@ -63,8 +64,30 @@ public class Main {
 						}
 					}
 					break;
+				
+				case "4": // Buy command
 					
-				case "4":
+					System.out.println("Use option 3 first to view available card IDs");
+					
+					System.out.print("Enter the ID of the card you want to buy: ");
+					String buyInput = scanner.nextLine();
+					
+					try {
+						long cardId = Long.parseLong(buyInput);
+						
+						boolean boughtSuccessfully = client.buyCard(username,  password, cardId);
+						
+						if (boughtSuccessfully) {
+							System.out.println("Card bought successfully");
+						} else {
+							System.out.println("Could not buy the card");
+						}
+					} catch (NumberFormatException e) { // Ensure entered card ID is numeric before sending it to server
+						System.out.println("Invalid card ID. Please enter a number");
+					}
+					break;
+					
+				case "5":
 					System.out.println("Exiting Hollomon client");
 					running = false;
 					break;
