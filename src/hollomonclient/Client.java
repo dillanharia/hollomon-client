@@ -244,7 +244,7 @@ public class Client {
     		}
     		
     		// Send BUY cmd with chosen card ID
-    		outputWriter.println(" BUY " + cardId);
+    		outputWriter.println("BUY " + cardId);
     		
     		// Read server result
     		serverResponse = inputReader.readLine();

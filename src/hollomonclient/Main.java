@@ -75,7 +75,7 @@ public class Main {
 					try {
 						long cardId = Long.parseLong(buyInput);
 						
-						boolean boughtSuccessfully = client.buyCard(username,  password, cardId);
+						boolean boughtSuccessfully = client.buyCard(username, password, cardId);
 						
 						if (boughtSuccessfully) {
 							System.out.println("Card bought successfully");
