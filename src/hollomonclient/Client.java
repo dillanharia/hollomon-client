@@ -40,7 +40,7 @@ public class Client {
             // Continuously read lines sent by the Hollomon server
             while ((serverResponse = inputReader.readLine()) != null) {
 
-            	// If a card block's received, parse it and store it as a Card obj
+            	// If a card block's received,parse it and store it as a Card obj
                 if (serverResponse.equals("CARD")) {
 
                     int id = Integer.parseInt(inputReader.readLine());
@@ -71,7 +71,7 @@ public class Client {
         return cards;
     }
     
-    // Method for receiving and dispaying credits upon login
+    // method for receiving and displaying credits upon login
     public int getCredits(String username, String password) {
 
         int credits = 0;
@@ -83,7 +83,7 @@ public class Client {
             BufferedReader inputReader = new BufferedReader(
                     new InputStreamReader(socket.getInputStream()))
         ) {
-            // Logs in
+            // logs in
             outputWriter.println(username.toLowerCase());
             outputWriter.println(password);
 
@@ -112,5 +112,59 @@ public class Client {
         }
 
         return credits; // credits value
+    }
+    
+ // method to request & return the player's current card collection
+    public ArrayList<Card> getCards(String username, String password) {
+
+        ArrayList<Card> cards = new ArrayList<>();
+
+        try (
+            Socket socket = new Socket(serverHost, serverPort);
+            PrintWriter outputWriter = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader inputReader = new BufferedReader(
+                    new InputStreamReader(socket.getInputStream()))
+        ) {
+
+            // login first
+            outputWriter.println(username.toLowerCase());
+            outputWriter.println(password);
+
+            String serverResponse;
+
+            // skip initial login response and starter cards
+            while ((serverResponse = inputReader.readLine()) != null) {
+                if (serverResponse.equals("OK")) {
+                    break;
+                }
+            }
+
+            // send CARDS command
+            outputWriter.println("CARDS");
+
+            // read and parse returned cards
+            while ((serverResponse = inputReader.readLine()) != null) {
+
+                if (serverResponse.equals("CARD")) {
+
+                    int id = Integer.parseInt(inputReader.readLine());
+                    String name = inputReader.readLine();
+                    Rarity rarity = Rarity.fromString(inputReader.readLine());
+                    int price = Integer.parseInt(inputReader.readLine());
+
+                    Card card = new Card(id, name, rarity, price);
+                    cards.add(card);
+                }
+                else if (serverResponse.equals("OK")) {
+                    break;
+                }
+            }
+
+        } catch (IOException e) { // fail safe in case cards aren't received
+            System.out.println("Error getting cards from server");
+            e.printStackTrace();
+        }
+
+        return cards;
     }
 }

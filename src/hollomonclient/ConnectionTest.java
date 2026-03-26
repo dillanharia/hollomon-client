@@ -20,5 +20,13 @@ public class ConnectionTest {
         int credits = client.getCredits("evidence", "internationaltodiscover"); // Requests credits from my user using pass
 
         System.out.println("\nTotal Credits: " + credits); // Prints total credits
+        
+        ArrayList<Card> currentCards = client.getCards("evidence", "internationaltodiscover");
+
+        // testing cards
+        System.out.println("\n--- CARDS Command Output ---");
+        for (Card c : currentCards) {
+            System.out.println(c);
+        }
     }
 }
