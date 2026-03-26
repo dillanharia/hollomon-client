@@ -52,6 +52,8 @@ public class Main {
 					offers.sort(null);
 					
 					System.out.println("\n--- Available Cards ---");
+					System.out.println("Number of offers: " + offers.size());
+					
 					
 					if (offers.isEmpty()) {
 						System.out.println("No cards are currently for sale");
