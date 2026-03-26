@@ -71,7 +71,6 @@ public class Client {
 
         int credits = 0;
         
-        
         try (
             Socket socket = new Socket(serverHost, serverPort);
             PrintWriter outputWriter = new PrintWriter(socket.getOutputStream(), true);
@@ -84,7 +83,6 @@ public class Client {
 
             String serverResponse;
 
-
             while ((serverResponse = inputReader.readLine()) != null) {
                 if (serverResponse.equals("OK")) {
                     break;
@@ -94,13 +92,15 @@ public class Client {
             // Send CREDITS command to the Hollomon server
             outputWriter.println("CREDITS");
 
-
             String creditLine = inputReader.readLine();
+            
+            if (credits == 0) {
+            	System.out.println("Oh No!");
+            } else {
             credits = Integer.parseInt(creditLine);
-
-  
+            
             inputReader.readLine();
-
+            }
         } catch (IOException e) {
             System.out.println("Error getting credits");
             e.printStackTrace();
@@ -214,7 +214,6 @@ public class Client {
     			BufferedReader inputReader = new BufferedReader(
     					new InputStreamReader(socket.getInputStream()))
     	) {
-    		
     		// Login
     		outputWriter.println(username.toLowerCase());
     		outputWriter.println(password);
@@ -226,7 +225,6 @@ public class Client {
     				break;
     			}
     		}
-    		
     		// Send SELL command
     		outputWriter.println("SELL " + cardId + " " + price);
     		
@@ -239,7 +237,6 @@ public class Client {
     		return false;
     	}
     }
-    
     // Reads a single card from the server response and converts it into a Card object
     private Card readCard(BufferedReader inputReader) throws IOException {
         long id = Long.parseLong(inputReader.readLine());
@@ -260,7 +257,6 @@ public class Client {
             }
         }
     }
-
     // Reads multiple card entries from the server until "OK" is received
     private ArrayList<Card> readCardsUntilOk(BufferedReader inputReader) throws IOException {
         ArrayList<Card> cards = new ArrayList<>();
