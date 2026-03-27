@@ -110,7 +110,7 @@ public class Main {
 					break;
 					
 				case "6": // Exit command
-					System.out.println("==== Exiting Hollomon client ==== ");
+					System.out.println("==== Exiting Hollomon client ====");
 					running = false;
 					break;
 					

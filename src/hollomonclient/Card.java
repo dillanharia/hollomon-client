@@ -60,6 +60,7 @@ public class Card implements Comparable<Card> {
     // Card Formmatting
     @Override
     public String toString() { 
-        return "[" + cardId + "] " + cardName + " (" + rarity + ") - " + price + " credits";
+    	return String.format("%-10s | %-19s | ID:%-5d | %2d credits",
+                rarity, cardName, cardId, price);
     }
 }
